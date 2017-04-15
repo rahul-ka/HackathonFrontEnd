@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?&amp;sensor=false"></script>
+<script type="text/javascript">
+      function initialize() {
+        var mapOptions = {
+          mapTypeId: google.maps.MapTypeId.SATELLITE
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"),
+        mapOptions);
+
+    var markers = [
+    { lat: 51.589994, lng: -4.112497, cave: "Cat Hole Cave", name: "<h2>Cat Hole Cave</h2><img src='http://www.ogof.org.uk/Pictures/Entrances/1118.jpg' width='200' height='150'><br><h3><A href='http://www.cambriancavingcouncil.org.uk/registry/ccr_registry_view.php?ID=1118' target=_blank>Cambrian Cave Registry Entry</A><br><br>SS 53757 90020<br>Altitude 51m<br>Length 30m</h3>", site: "blue_cave.png"},
+    { lat: 51.564564, lng: -4.274611, cave: "Mewslade Quarry Cave - Left", name: "<h2>Mewslade Quarry Cave - Left Entrance</h2><img src='http://www.ogof.org.uk/Pictures/Entrances/1570.jpg' width='200' height='150'><br><h3><A href='http://www.cambriancavingcouncil.org.uk/registry/ccr_registry_view.php?ID=1570' target=_blank>Cambrian Cave Registry Entry</A><br><br>SS 42440 87530<br>Altitude TBCm<br>Length 10m<br><br>Photo courtesy of Gary Evans</h3>", site: "blue_cave.png" },
+];
+
+for (index in markers) addMarker(markers[index]);
+function addMarker(data) {
+
+    var marker = new google.maps.Marker({
+    position: new google.maps.LatLng(data.lat, data.lng),
+    map: map,
+    title: data.cave,
+    icon: data.site
+  });     
+  var content = document.createElement("DIV");
+  var title = document.createElement("DIV");
+  title.innerHTML = data.name;
+  content.appendChild(title);
+  var infowindow = new google.maps.InfoWindow({
+  content: content,
+  maxWidth: 180
+    });
+
+  google.maps.event.addListener(marker, "click", function() {
+  infowindow.open(map, marker);
+  });
+}
+var bounds = new google.maps.LatLngBounds();
+    for (index in markers) {
+      var data = markers[index];
+      bounds.extend(new google.maps.LatLng(data.lat, data.lng));
+    }
+    map.fitBounds(bounds);
+  }   
+</script>
+</head>
+<body onload="initialize()">
+<div id="map-canvas"></div>
+</body>
+
+</html>
